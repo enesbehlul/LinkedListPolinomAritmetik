@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -61,6 +62,8 @@ public class hesaplama<T> extends javax.swing.JFrame {
         lblDenklemler = new javax.swing.JLabel();
         btnHesapla = new javax.swing.JButton();
         cmbIslemler = new javax.swing.JComboBox<>();
+        txtSonucDenklem = new javax.swing.JTextField();
+        lblSonuc = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,7 +75,7 @@ public class hesaplama<T> extends javax.swing.JFrame {
         });
 
         txtDenklemler.setColumns(20);
-        txtDenklemler.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        txtDenklemler.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtDenklemler.setRows(5);
         jScrollPane1.setViewportView(txtDenklemler);
 
@@ -85,41 +88,53 @@ public class hesaplama<T> extends javax.swing.JFrame {
             }
         });
 
+        txtSonucDenklem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
-                        .addComponent(btnDosyaOku))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDenklemler)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
-                        .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnHesapla)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(lblDenklemler)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtSonucDenklem, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnHesapla))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addComponent(lblSonuc, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(330, Short.MAX_VALUE)
+                .addComponent(btnDosyaOku)
+                .addGap(328, 328, 328))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(31, 31, 31)
                 .addComponent(btnDosyaOku, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(10, 10, 10)
                 .addComponent(lblDenklemler)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHesapla)
                     .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblSonuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSonucDenklem, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -143,9 +158,9 @@ public class hesaplama<T> extends javax.swing.JFrame {
                                 if (term.contains("x^")) {
                                     equation1.addLast(Integer.parseInt(term.split("x\\^")[0]), Integer.parseInt(term.split("x\\^")[1]));
                                 } else if (!term.contains("x")) {
-                                    equation1.addLast(0, Integer.parseInt(term));
+                                    equation1.addLast(Integer.parseInt(term), 0);
                                 } else if (term.contains("x") && !term.contains("^")) {
-                                    equation1.addLast(Integer.parseInt(term.split("x")[0]), 1);
+                                    equation1.addLast(1, Integer.parseInt(term.split("x")[0]));
                                 }
                             }
                             break;
@@ -156,9 +171,9 @@ public class hesaplama<T> extends javax.swing.JFrame {
                                 if (term.contains("x^")) {
                                     equation2.addLast(Integer.parseInt(term.split("x\\^")[0]), Integer.parseInt(term.split("x\\^")[1]));
                                 } else if (!term.contains("x")) {
-                                    equation2.addLast(0, Integer.parseInt(term));
+                                    equation2.addLast(Integer.parseInt(term), 0);
                                 } else if (term.contains("x") && !term.contains("^")) {
-                                    equation2.addLast(Integer.parseInt(term.split("x")[0]), 1);
+                                    equation2.addLast(1, Integer.parseInt(term.split("x")[0]));
                                 }
                             }
                             break;
@@ -179,60 +194,21 @@ public class hesaplama<T> extends javax.swing.JFrame {
 
     private void btnHesaplaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHesaplaActionPerformed
         // TODO add your handling code here:
-        Node temp1 = equation1.head;;
-        Node temp2 = equation2.head;
-        LinkedList newEquation = new LinkedList();
-
-//        for (int i = 0; i < equation1.getSize(); i++) {
-//            
-//            for (int j = 0; j < equation2.getSize(); j++) {
-//                
-//                if (temp1.data2 == temp2.data2) {
-//                    newEquation.addLast((int) temp1.data1 + (int) temp2.data1, temp2.data2);
-//                    equation1.remove(temp1.data1, temp1.data2);
-//                    equation2.remove(temp2.data1, temp2.data2);
-//                }
-//                if (temp1.data1.equals(0) && temp2.data1.equals(0)) {
-//                    newEquation.addLast(0,(int)temp1.data2+(int)temp2.data2);
-//                    equation1.remove(temp1.data1, temp1.data2);
-//                    equation2.remove(temp2.data1, temp2.data2);
-//                }
-//                temp2 = temp2.next;
-//            }
-//            temp1 = temp1.next;
-//            temp2 = equation2.head;
-//        }
-//        Node temp3 = equation2.head;
-//        for (int i = 0; i < equation2.getSize(); i++) {
-//            newEquation.addLast(temp3.data1, temp3.data2);
-//            temp3 = temp3.next;
-//        }
-//        temp3 = equation1.head;
-//        for (int i = 0; i < equation1.getSize(); i++) {
-//            newEquation.addLast(temp3.data1, temp3.data2);
-//            temp3 = temp3.next;
-//        }
-        for (int i = 0; i < equation2.getSize(); i++) {
-            equation1.addLast(temp2.data1, temp2.data2);
+    //LinkedList newEquation = equation1.additionList(equation2);
+//    newEquation.print();
+    LinkedList newEquation = equation1.additionList2(equation2);
+    newEquation.simplification();
+    Node temp = newEquation.head;
+    txtSonucDenklem.setText(newEquation.stringTo());
+    double sayi = 0;
+    BigInteger sayi2 = new BigInteger("0");
+        for (int i = 0; i < newEquation.getSize(); i++) {
+            sayi = (int)temp.data1*Math.pow(x, (int)temp.data2);
+            sayi2.add(new BigInteger(Double.toString(sayi) ));
+            temp = temp.next;
         }
-        equation1.print();
-        temp1 = equation1.head;
-        for (int i = 0; i < equation1.getSize(); i++) {
-            temp2 = equation1.head;
-            for (int j = 0; j < equation1.getSize(); j++) {
-                if (temp1.data2 == temp2.data2) {
-                    newEquation.addLast((int) temp1.data1 + (int) temp2.data1, temp2.data2);
-                    equation1.remove(temp1.data1, temp1.data2);
-                }
-                if (temp1.data1.equals(0) && temp2.data1.equals(0)) {
-                    newEquation.addLast(0, (int) temp1.data2 + (int) temp2.data2);
-                    equation1.remove(temp1.data1, temp1.data2);
-                }
-                temp2 = temp2.next;
-            }
-            temp1 = temp1.next;
-        }
-        newEquation.print();
+        System.out.println(sayi2);
+        System.out.println(x);
     }//GEN-LAST:event_btnHesaplaActionPerformed
 
     /**
@@ -276,6 +252,8 @@ public class hesaplama<T> extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbIslemler;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDenklemler;
+    private javax.swing.JLabel lblSonuc;
     private javax.swing.JTextArea txtDenklemler;
+    private javax.swing.JTextField txtSonucDenklem;
     // End of variables declaration//GEN-END:variables
 }
