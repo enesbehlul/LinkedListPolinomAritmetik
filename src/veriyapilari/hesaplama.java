@@ -1,14 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @file hesaplama.java
+ * @description polinom toplamasi gerceklestiren kullanici arayuzu
+ * @assignment birinci odev
+ * @date 17.03.2018
+ * @author Enes Behlul Yenidunya - ebehlul.yenidunya@stu.fsm.edu.tr
  */
 package veriyapilari;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.logging.Level;
@@ -41,8 +45,6 @@ public class hesaplama<T> extends javax.swing.JFrame {
         dcm = new DefaultComboBoxModel();
         dcm.addElement("+");
         dcm.addElement("-");
-        dcm.addElement("*");
-        dcm.addElement("/");
         cmbIslemler.setModel(dcm);
         cmbIslemler.setSelectedIndex(-1);
     }
@@ -63,9 +65,14 @@ public class hesaplama<T> extends javax.swing.JFrame {
         btnHesapla = new javax.swing.JButton();
         cmbIslemler = new javax.swing.JComboBox<>();
         txtSonucDenklem = new javax.swing.JTextField();
-        lblSonuc = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtSonucDenklem1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(527, 457));
+        setMinimumSize(new java.awt.Dimension(527, 457));
 
         btnDosyaOku.setText("DOSYA OKU");
         btnDosyaOku.addActionListener(new java.awt.event.ActionListener() {
@@ -90,57 +97,83 @@ public class hesaplama<T> extends javax.swing.JFrame {
 
         txtSonucDenklem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+        jLabel1.setText("Sonuç Denklemi");
+
+        txtSonucDenklem1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel2.setText("İşlem Sonucu:");
+
+        jLabel3.setText("İşlem:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDenklemler)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtSonucDenklem, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnHesapla))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(lblSonuc, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(330, Short.MAX_VALUE)
+                .addGap(222, 222, 222)
                 .addComponent(btnDosyaOku)
-                .addGap(328, 328, 328))
+                .addContainerGap(228, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblDenklemler)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSonucDenklem, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtSonucDenklem1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(15, 15, 15)
+                        .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(btnHesapla)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(btnDosyaOku, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(14, 14, 14)
+                .addComponent(btnDosyaOku, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDenklemler)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHesapla)
-                    .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblSonuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtSonucDenklem, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addGap(53, 53, 53))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbIslemler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHesapla))
+                .addGap(4, 4, 4)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSonucDenklem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSonucDenklem1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDosyaOkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDosyaOkuActionPerformed
+        equation1.clear();
+        equation2.clear();
+        txtDenklemler.setText("");
         JFileChooser jFileChooser = new JFileChooser();
         int result = jFileChooser.showOpenDialog(this);
         try {
@@ -156,7 +189,8 @@ public class hesaplama<T> extends javax.swing.JFrame {
                             String[] terms = equation.split("\\+|(?=\\-)");
                             for (String term : terms) {
                                 if (term.contains("x^")) {
-                                    equation1.addLast(Integer.parseInt(term.split("x\\^")[0]), Integer.parseInt(term.split("x\\^")[1]));
+                                    equation1.addLast(Integer.parseInt(term.split("x\\^")[0]),
+                                            Integer.parseInt(term.split("x\\^")[1]));
                                 } else if (!term.contains("x")) {
                                     equation1.addLast(Integer.parseInt(term), 0);
                                 } else if (term.contains("x") && !term.contains("^")) {
@@ -179,8 +213,18 @@ public class hesaplama<T> extends javax.swing.JFrame {
                             break;
                         case 2:
                             x = Integer.parseInt(equation);
+                            txtDenklemler.setText(txtDenklemler.getText()+x);
+                            break;
                     }
                     count++;
+                }
+                if (equation1.head != null && equation2.head != null) {
+                    BufferedWriter list1 = new BufferedWriter(new FileWriter("list1.txt"));
+                    BufferedWriter list2 = new BufferedWriter(new FileWriter("list2.txt"));
+                    list1.write(equation1.string());
+                    list1.close();
+                    list2.write(equation2.string());
+                    list2.close();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Dosya okunamadı. Tekrar deneyiniz.");
@@ -194,21 +238,45 @@ public class hesaplama<T> extends javax.swing.JFrame {
 
     private void btnHesaplaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHesaplaActionPerformed
         // TODO add your handling code here:
-    //LinkedList newEquation = equation1.additionList(equation2);
-//    newEquation.print();
-    LinkedList newEquation = equation1.additionList2(equation2);
-    newEquation.simplification();
-    Node temp = newEquation.head;
-    txtSonucDenklem.setText(newEquation.stringTo());
-    double sayi = 0;
-    BigInteger sayi2 = new BigInteger("0");
-        for (int i = 0; i < newEquation.getSize(); i++) {
-            sayi = (int)temp.data1*Math.pow(x, (int)temp.data2);
-            sayi2.add(new BigInteger(Double.toString(sayi) ));
-            temp = temp.next;
+        boolean seciliMi1 = true, secilimi2 = true;
+        if (cmbIslemler.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Lütfen bir işlem seçiniz.");
+            seciliMi1 = false;
         }
-        System.out.println(sayi2);
-        System.out.println(x);
+        if (txtDenklemler.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(this, "Lütfen bir dosya seçiniz.");
+            secilimi2 = false;
+        }
+        if (seciliMi1 && secilimi2) {
+            if (cmbIslemler.getSelectedItem().equals("+")) {
+                LinkedList newEquation = equation1.addLinkedList(equation2);
+                newEquation.simplification();
+                Node temp = newEquation.head;
+                txtSonucDenklem.setText(newEquation.toString());
+                BigInteger sayi = new BigInteger("0");
+                for (int i = 0; i < newEquation.getSize(); i++) {
+                    BigInteger katSayi = new BigInteger(temp.data1.toString());
+                    BigInteger taban = new BigInteger(x + "");
+                    sayi = sayi.add(katSayi.multiply(taban.pow((int) temp.data2)));
+                    temp = temp.next;
+                }
+                txtSonucDenklem1.setText(sayi.toString());
+            }
+            if (cmbIslemler.getSelectedItem().equals("-")) {
+                LinkedList newEquation = equation1.subLinkedList(equation2);
+                newEquation.simplification();
+                Node temp = newEquation.head;
+                txtSonucDenklem.setText(newEquation.toString());
+                BigInteger sayi = new BigInteger("0");
+                for (int i = 0; i < newEquation.getSize(); i++) {
+                    BigInteger katSayi = new BigInteger(temp.data1.toString());
+                    BigInteger taban = new BigInteger(x + "");
+                    sayi = sayi.add(katSayi.multiply(taban.pow((int) temp.data2)));
+                    temp = temp.next;
+                }
+                txtSonucDenklem1.setText(sayi.toString());
+            }
+        }
     }//GEN-LAST:event_btnHesaplaActionPerformed
 
     /**
@@ -240,6 +308,7 @@ public class hesaplama<T> extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new hesaplama().setVisible(true);
             }
@@ -250,10 +319,13 @@ public class hesaplama<T> extends javax.swing.JFrame {
     private javax.swing.JButton btnDosyaOku;
     private javax.swing.JButton btnHesapla;
     private javax.swing.JComboBox<String> cmbIslemler;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDenklemler;
-    private javax.swing.JLabel lblSonuc;
     private javax.swing.JTextArea txtDenklemler;
     private javax.swing.JTextField txtSonucDenklem;
+    private javax.swing.JTextField txtSonucDenklem1;
     // End of variables declaration//GEN-END:variables
 }

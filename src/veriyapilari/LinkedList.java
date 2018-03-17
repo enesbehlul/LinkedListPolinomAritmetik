@@ -1,7 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @file hesaplama.java
+ * @description polinom toplamasi gerceklestiren kullanici arayuzu
+ * @assignment birinci odev
+ * @date 17.03.2018
+ * @author Enes Behlul Yenidunya - ebehlul.yenidunya@stu.fsm.edu.tr
  */
 package veriyapilari;
 
@@ -39,9 +41,7 @@ public class LinkedList<T> {
     }
 
     void remove(T rData1, T rData2) {
-        if (isEmpty()) {
-
-        } else {
+        if (!isEmpty()) {
             if (head.data1.equals(rData1) && head.data2.equals(rData2)) {
                 head = head.next;
                 size--;
@@ -61,6 +61,11 @@ public class LinkedList<T> {
         }
     }
 
+    void clear() {
+        head = null;
+        size = 0;
+    }
+
     void print() {
         Node<T> temp = head;
 
@@ -71,32 +76,52 @@ public class LinkedList<T> {
         System.out.println("null");
     }
 
-    public String stringTo() {
+    public String string() {
         Node<T> temp = head;
-        String list = "";
-
-        for (int i = 0; i < size; i++) {
-            if (temp != null) {
-                int a = (Integer) temp.data1;
-                if (a > 0 && !temp.data2.equals(1)) {
-                    list = list + "+" + temp.data1 + "x^" + temp.data2;
-                } else if (a < 0 && !temp.data2.equals(1)) {
-                    list = list + temp.data1 + "x^" + temp.data2;
-                } else if (temp.data2.equals(0) && (Integer) temp.data2 > 0) {
-                    list = list + "+" + temp.data2;
-                } else if (temp.data2.equals(0) && (Integer) temp.data2 < 0) {
-                    list = list + temp.data2;
-                }
+        if (head != null) {
+            String liste = "";
+            for (int i = 0; i < size; i++) {
+                liste = liste + temp.data1 + ", " + temp.data2 + "->";
                 temp = temp.next;
             }
+            liste = liste + "null";
+            return liste;
         }
-        if (list.charAt(0) == '+') {
-            StringBuilder sb;
-            sb = new StringBuilder(list);
-            sb.deleteCharAt(0);
-            list = sb.toString();
+        return "null linked list";
+    }
+
+    @Override
+    public String toString() {
+        Node<T> temp = head;
+        if (head != null) {
+            String list = " ";
+            for (int i = 0; i < size; i++) {
+                if (temp != null) {
+                    int a = (Integer) temp.data1;
+                    if (a > 0 && !temp.data2.equals(1) && !temp.data2.equals(0)) {
+                        list = list + "+" + temp.data1 + "x^" + temp.data2;
+                    } else if (a < 0 && !temp.data2.equals(0)) {
+                        list = list + temp.data1 + "x^" + temp.data2;
+                    } else if (a < 0 && temp.data2.equals(0)) {
+                        list = list + temp.data1;
+                    } else if (a > 0 && temp.data2.equals(0)) {
+                        list = list + "+" + temp.data1;
+                    }
+                    temp = temp.next;
+                }
+            }
+            if (list.length() > 1) {
+                if (list.charAt(1) == '+') {
+                    StringBuilder sb;
+                    sb = new StringBuilder(list);
+                    sb.deleteCharAt(0);
+                    sb.deleteCharAt(0);
+                    list = sb.toString();
+                }
+            }
+            return list;
         }
-        return list;
+        return "bos liste";
     }
 
     public int getSize() {
@@ -107,53 +132,15 @@ public class LinkedList<T> {
         return size == 0;
     }
 
-    public LinkedList additionList(LinkedList equation2) {
-        LinkedList equation1 = this;
-        Node temp1 = equation1.head;
-        Node temp2 = equation2.head;
-        LinkedList newEquation = new LinkedList();
-        for (int i = 0; i < equation1.size; i++) {
-
-            for (int j = 0; j < equation2.size; j++) {
-
-                if (temp1.data2 == temp2.data2 && equation1.size > 1) {
-                    newEquation.addLast((int) temp1.data1 + (int) temp2.data1, temp2.data2);
-                    equation1.remove(temp1.data1, temp1.data2);
-                    equation2.remove(temp2.data1, temp2.data2);
-                    i = i - 1;
-                } else if (temp1.data2.equals(0) && temp2.data2.equals(0)) {
-                    newEquation.addLast((int) temp1.data1 + (int) temp2.data1, 0);
-                    equation1.remove(temp1.data1, temp1.data2);
-                    equation2.remove(temp2.data1, temp2.data2);
-                }
-                temp2 = temp2.next;
-            }
-            temp1 = temp1.next;
-            temp2 = equation2.head;
-        }
-        temp1 = equation2.head;
-        for (int i = 0; i < equation2.size; i++) {
-            newEquation.addLast(temp1.data1, temp1.data2);
-            temp1 = temp1.next;
-        }
-        temp1 = equation1.head;
-        for (int i = 0; i < equation1.size; i++) {
-            newEquation.addLast(temp1.data1, temp1.data2);
-            temp1 = temp1.next;
-        }
-        return newEquation;
-    }
-
     public void simplification() {
         LinkedList newEquation = this;
         Node temp1 = this.head;
         Node temp2;
-        int sayac = 0;
         for (int i = 0; i < this.size; i++) {
             temp2 = this.head;
             for (int j = 0; j < this.size; j++) {
                 if (temp2.next != null) {
-                    if (temp1 != temp2 && temp1.data2.equals(temp2.data2) && temp2.next != null && !temp1.data2.equals(0) && !temp2.data2.equals(0)) {
+                    if (temp1 != temp2 && temp1.data2.equals(temp2.data2)) {
                         newEquation.addLast((int) temp1.data1 + (int) temp2.data1, temp2.data2);
                         newEquation.remove(temp1.data1, temp1.data2);
                         newEquation.remove(temp2.data1, temp2.data2);
@@ -166,8 +153,6 @@ public class LinkedList<T> {
                         i = i - 1;
                         break;
                     }
-                    System.out.println(sayac++);
-                    newEquation.print();
                     temp2 = temp2.next;
                 } else {
                     temp2 = this.head;
@@ -177,19 +162,33 @@ public class LinkedList<T> {
         }
     }
 
-    public LinkedList additionList2(LinkedList equation2) {
+    public LinkedList addLinkedList(LinkedList equation2) {
         LinkedList equation1 = this;
         Node temp1 = equation1.head;
         Node temp2 = equation2.head;
         LinkedList newEquation = new LinkedList();
         for (int i = 0; i < equation1.size; i++) {
             newEquation.addLast(temp1.data1, temp1.data2);
-
             temp1 = temp1.next;
-
         }
         for (int j = 0; j < equation2.size; j++) {
             newEquation.addLast(temp2.data1, temp2.data2);
+            temp2 = temp2.next;
+        }
+        return newEquation;
+    }
+
+    public LinkedList subLinkedList(LinkedList equation2) {
+        LinkedList equation1 = this;
+        Node temp1 = equation1.head;
+        Node temp2 = equation2.head;
+        LinkedList newEquation = new LinkedList();
+        for (int i = 0; i < equation1.size; i++) {
+            newEquation.addLast(temp1.data1, temp1.data2);
+            temp1 = temp1.next;
+        }
+        for (int j = 0; j < equation2.size; j++) {
+            newEquation.addLast(-1 * (int) temp2.data1, temp2.data2);
             temp2 = temp2.next;
         }
         return newEquation;
