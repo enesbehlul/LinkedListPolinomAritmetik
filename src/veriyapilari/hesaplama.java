@@ -174,6 +174,8 @@ public class hesaplama<T> extends javax.swing.JFrame {
         equation1.clear();
         equation2.clear();
         txtDenklemler.setText("");
+        txtSonucDenklem.setText("");
+        txtSonucDenklem1.setText("");
         JFileChooser jFileChooser = new JFileChooser();
         int result = jFileChooser.showOpenDialog(this);
         try {
@@ -188,9 +190,11 @@ public class hesaplama<T> extends javax.swing.JFrame {
                             txtDenklemler.setText(txtDenklemler.getText() + equation + "\n");
                             String[] terms = equation.split("\\+|(?=\\-)");
                             for (String term : terms) {
-                                if (term.contains("x^")) {
+                                if (term.contains("x^") && !term.split("x\\^")[0].equals("")) {
                                     equation1.addLast(Integer.parseInt(term.split("x\\^")[0]),
                                             Integer.parseInt(term.split("x\\^")[1]));
+                                } else if (term.contains("x^") && term.split("x\\^")[0].equals("")) {
+                                    equation1.addLast(1,Integer.parseInt(term.split("x\\^")[1]));
                                 } else if (!term.contains("x")) {
                                     equation1.addLast(Integer.parseInt(term), 0);
                                 } else if (term.contains("x") && !term.contains("^")) {
@@ -213,7 +217,7 @@ public class hesaplama<T> extends javax.swing.JFrame {
                             break;
                         case 2:
                             x = Integer.parseInt(equation);
-                            txtDenklemler.setText(txtDenklemler.getText()+x);
+                            txtDenklemler.setText(txtDenklemler.getText() + x);
                             break;
                     }
                     count++;
