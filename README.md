@@ -1,7 +1,7 @@
 # LinkedListPolinomAritmetik
 Polinomlar üzerinde toplama ve çıkarma programı
 
-Bu program iki adet tek değişkenli polinomu kullanıcı isteğine göre toplar ya da çıkarır.
+Bu program iki adet polinomu kullanıcı isteğine göre toplar ya da çıkarır.
 
 LinkedList.java, Node.java sınıflarından ve hesaplama.java JFrameForm’undan oluşur.
 
@@ -33,7 +33,6 @@ Txt dosyası içersinde, iki adet denklemin, ayrı satırlarda alt alta gelecek 
 17x^56+18x^44-11x^37-21x^19+94
 
 2
-
 
 Kullanıcı arayüzünde “dosya oku” düğmesi ile bir dosya seçici (JfileChooser) aracılığıyla uygun formatlı bir txt dosyası seçilmelidir. Bu işlemin ardından dosya içersindeki iki polinom, textArea içersine yazdırılır. Seçim sonrası döngü ile bir String objesine(karakter dizisi) teker teker satırlar atanır. Atanan ilk iki satırda, önceden oluşturulmuş “tek bağlantılı sıralı liste” (singly linked list) objesinin yapısında bulunan, her biri iki adet veri tutan düğümlerin(node), birinci verisine x’in katsayısı, ikincisine ise kuvveti kopyalanır. Kopyalama işleminde, txt dosyasından gelen satır, bir String methodu olan split ile ilk olarak terimlere ayrılır ardından ikinci bir split işlemiyle terim içindeki x ve ^ karakterleri temizlendikten sonra, düğümlere aktarılır. Split işlemi sırasında regex’e yer verilmiştir. 
 
